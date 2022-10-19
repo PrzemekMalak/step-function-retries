@@ -19,6 +19,5 @@ export class StepFunctionRetriesStack extends cdk.Stack {
         lambdaFunction: func,
       }).addRetry(this.retryProps).next(new sf.Succeed(this, "End"))
     });
-
   }
 }
