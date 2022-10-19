@@ -4,17 +4,18 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { CfnOutput } from 'aws-cdk-lib';
 
 export class LambdaStack extends cdk.Stack {
+  public readonly handler: lambda.IFunction
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const handler = new lambda.Function(this, "TestFunction", {
+    this.handler = new lambda.Function(this, "TestFunction", {
         runtime: lambda.Runtime.NODEJS_14_X, 
         code: lambda.Code.fromAsset("src"),
         handler: "function.lambdaHandler"
       });
 
       new CfnOutput(this, "lambdaArn", {
-        value: handler.functionArn,
+        value: this.handler.functionArn,
         exportName: "functionArn"
       })
   }
